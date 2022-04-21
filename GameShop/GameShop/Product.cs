@@ -38,7 +38,7 @@ namespace GameShop
         //      decimala da prihvata i . i , i za cenu i za procenat
         //      ogranicen br karaktera po polju, npr 64
         // ne mora da ispise posle 20% nego zadatog
-        //exit na dugme
+        //      exit na dugme
         //      da moze da racuna sa 20% (unet na kraju %)
         //      negativan broj
 
