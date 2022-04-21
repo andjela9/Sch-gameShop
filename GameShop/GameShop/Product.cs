@@ -32,6 +32,15 @@ namespace GameShop
                 $"Cena {price} pre poreza i {this.fixedTax(price)} nakon 20% poreza. \n " +
                 $"Cena {price} pre poreza i {this.customTax(price, tax)} nakon {tax}% poreza";
         }
+        //      dodati unos naziva, upc, cene, zastite za to (validacija)
+        //      upc mora biti celobrojan, bez specijalnih karaktera itd
+        //      naziv ne sme prazan i da nema razmak
+        //      decimala da prihvata i . i , i za cenu i za procenat
+        //      ogranicen br karaktera po polju, npr 64
+        // ne mora da ispise posle 20% nego zadatog
+        //exit na dugme
+        //      da moze da racuna sa 20% (unet na kraju %)
+        //      negativan broj
 
 
     }
