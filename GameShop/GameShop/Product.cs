@@ -19,12 +19,12 @@ namespace GameShop
         }
 
         public double fixedTax() {
-            return Math.Round(0.8 * this.price, 2);
+            return Math.Round(1.2 * this.price, 2);
         }
 
         public double customTax(double tax)
         {
-            return Math.Round(((100 - tax) / 100) * this.price, 2);
+            return Math.Round(((100 + tax) / 100) * this.price, 2);
         }
 
         public string Ispis(double tax)

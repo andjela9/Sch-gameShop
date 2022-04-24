@@ -6,8 +6,7 @@ namespace GameShop
 {
     class ValidateInput
     {
-
-      
+ 
         public string ValidName(string name)
         {
             if(name.Length > 0 && name.Length <= 64 && name != " ")

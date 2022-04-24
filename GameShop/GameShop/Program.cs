@@ -80,7 +80,7 @@ namespace GameShop
                 }
                 else
                 {
-                    Console.WriteLine("U unosu postoji greska!");
+                    Console.WriteLine("\n******U unosu postoji greska!*******\n");
                 }
             }
          
