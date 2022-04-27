@@ -16,7 +16,7 @@ namespace GameShop
                 string sName, name, sTax, sUpc, sDiscount;
                 Console.WriteLine("Unesite naziv proizvoda. Za izlazak unesite exit");
                 sName = Console.ReadLine();
-                if (sName == "exit") break;
+                if (sName.ToLower() == "exit") break;
                 name = "-1";
                 if (validator1.ValidName(sName) != "-1")
                 {
@@ -31,7 +31,7 @@ namespace GameShop
 
                 Console.WriteLine("Unesite zeljeni procenat poreza: Za izlazak unesite exit");
                 sTax = Console.ReadLine();
-                if (sTax == "exit") break;
+                if (sTax.ToLower() == "exit") break;
                 double tax = -1;
                 if (validator1.ValidTax(sTax) != -1)
                 {
@@ -45,7 +45,7 @@ namespace GameShop
 
                 Console.WriteLine("Unesite zeljeni procenat popusta: Za izlazak unesite exit");
                 sDiscount = Console.ReadLine();
-                if (sDiscount == "exit") break;
+                if (sDiscount.ToLower() == "exit") break;
                 double discount = -1;
                 if (validator1.ValidTax(sDiscount) != -1)
                 {
@@ -59,7 +59,7 @@ namespace GameShop
 
                 Console.WriteLine("Unesite upc: Za izlazak unesite exit");
                 sUpc = Console.ReadLine();
-                if (sUpc == "exit") break;
+                if (sUpc.ToLower() == "exit") break;
                 int upc = -1;
                 if (validator1.ValidUPC(sUpc) != -1)
                 {
@@ -74,7 +74,7 @@ namespace GameShop
 
                 Console.WriteLine("Unesite cenu: Za izlazak unesite exit");
                 string sPrice = Console.ReadLine();
-                if (sPrice == "exit") break;
+                if (sPrice.ToLower() == "exit") break;
                 double price = -1;
                 if (validator1.ValidatePrice(sPrice) != -1)
                 {
