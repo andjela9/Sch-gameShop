@@ -7,13 +7,13 @@ namespace GameShop
     {
         static void Main(string[] args)
         {
-            ValidateInput validator1 = new ValidateInput();
-            Product product1 = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
-            string sName, name, sTax, sUpc; 
+            
            
             while (true)
             {
-                
+                ValidateInput validator1 = new ValidateInput();
+                Product product1 = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
+                string sName, name, sTax, sUpc, sDiscount;
                 Console.WriteLine("Unesite naziv proizvoda. Za izlazak unesite exit");
                 sName = Console.ReadLine();
                 if (sName == "exit") break;
@@ -24,7 +24,7 @@ namespace GameShop
                 }
                 else
                 {
-                    Console.WriteLine("Pogresen unos. Naziv ne sme biti prazan.");
+                    Console.WriteLine("Pogresen unos. Naziv ne sme biti prazan ili duzi od 64 karaktera.");
                 }
                 //Console.WriteLine($"{name}\n");
 
@@ -42,6 +42,19 @@ namespace GameShop
                     Console.WriteLine("Pogresan unos. Porez mora biti pozitivan broj do 64 karaktera");
                 }
                 //Console.WriteLine($"{tax}\n");
+
+                Console.WriteLine("Unesite zeljeni procenat popusta: Za izlazak unesite exit");
+                sDiscount = Console.ReadLine();
+                if (sDiscount == "exit") break;
+                double discount = -1;
+                if (validator1.ValidTax(sDiscount) != -1)
+                {
+                    discount = validator1.ValidTax(sDiscount);
+                }
+                else
+                {
+                    Console.WriteLine("Pogresan unos. Popust mora biti pozitivan broj do 64 karaktera");
+                }
 
 
                 Console.WriteLine("Unesite upc: Za izlazak unesite exit");
@@ -72,11 +85,13 @@ namespace GameShop
                     Console.WriteLine("Pogresan unos. Cena mora biti pozitivan broj do 64 karaktera");
                 }
                 //Console.WriteLine($"{price}\n");
-                if (name != "-1" && tax != -1 && upc != -1 && price != -1)
+
+                if (name != "-1" && tax != -1 && upc != -1 && price != -1 && discount != -1)
                 {
                     Product product = new Product(name, upc, price);
-                    product.customTax(tax);
-                    Console.WriteLine(product.Ispis(tax));
+                    //product.withTax(tax);
+                    //product.withDiscount(discount);
+                    Console.WriteLine(product.Ispis(tax, discount));
                 }
                 else
                 {
