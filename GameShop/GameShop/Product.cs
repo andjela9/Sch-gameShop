@@ -44,7 +44,7 @@ namespace GameShop
 
         public string Ispis(double tax, double discount)
         {
-            return $"\n\nIme = {Name}, UPC = {UPC}, cena = {price} rsd.\n " +
+            return $"\n\nIme = {Name}, UPC = {UPC}, cena = {price} rsd.\n" +
                 //$"Cena {price} pre poreza i {this.fixedTax()} nakon 20% poreza. \n " +
                 $"Porez = {tax}%, Popust = {discount}%\n" +
                 $"Iznos poreza = {this.TaxOrDiscountOnly(tax)} rsd, Iznos popusta = {this.TaxOrDiscountOnly(discount)} rsd\n" +

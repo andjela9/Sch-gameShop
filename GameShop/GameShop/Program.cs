@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace GameShop
@@ -7,13 +8,56 @@ namespace GameShop
     {
         static void Main(string[] args)
         {
-            
-           
-            while (true)
+           while (true)
             {
                 ValidateInput validator1 = new ValidateInput();
+                DiscountBase discountBase = new DiscountBase();
+                string sName, name, sTax, sUpc, sDiscount, sPrice;
+                double discount, price, tax;
+                int upc;
+
+
+                Console.WriteLine("Unesite upc i popust za proizvod s tim upc");
+                for(int i = 0; i < 3; i++)
+                {
+                    Console.WriteLine($"UPC {i+1}:");
+                    sUpc = Console.ReadLine();
+                    upc = -1;
+                    if (validator1.ValidUPC(sUpc) != -1)
+                    {
+                        upc = validator1.ValidUPC(sUpc);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pogresan unos. UPC mora biti pozitivan celobrojan broj do 64 karaktera");
+                    }
+
+                    Console.WriteLine($"Popust {i + 1}:");
+                    sDiscount = Console.ReadLine();
+                    discount = -1;
+                    if (validator1.ValidTax(sDiscount) != -1)
+                    {
+                        discount = validator1.ValidTax(sDiscount);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pogresan unos. Popust mora biti pozitivan broj do 64 karaktera");
+                    }
+
+                    if(upc != -1 && discount != -1)
+                    {
+                        discountBase.upcPopustPar.Add(upc, discount);
+                    }
+                }
+
+                foreach(KeyValuePair<int, double> kvp in discountBase.upcPopustPar)
+                {
+                    Console.WriteLine($"Kljuc: {kvp.Key}, vrednost: {kvp.Value}");
+                }
+
+                
                 Product product1 = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
-                string sName, name, sTax, sUpc, sDiscount;
+                
                 Console.WriteLine("Unesite naziv proizvoda. Za izlazak unesite exit");
                 sName = Console.ReadLine();
                 if (sName.ToLower() == "exit") break;
@@ -32,7 +76,7 @@ namespace GameShop
                 Console.WriteLine("Unesite zeljeni procenat poreza: Za izlazak unesite exit");
                 sTax = Console.ReadLine();
                 if (sTax.ToLower() == "exit") break;
-                double tax = -1;
+                tax = -1;
                 if (validator1.ValidTax(sTax) != -1)
                 {
                     tax = validator1.ValidTax(sTax);
@@ -46,7 +90,7 @@ namespace GameShop
                 Console.WriteLine("Unesite zeljeni procenat popusta: Za izlazak unesite exit");
                 sDiscount = Console.ReadLine();
                 if (sDiscount.ToLower() == "exit") break;
-                double discount = -1;
+                discount = -1;
                 if (validator1.ValidTax(sDiscount) != -1)
                 {
                     discount = validator1.ValidTax(sDiscount);
@@ -60,7 +104,7 @@ namespace GameShop
                 Console.WriteLine("Unesite upc: Za izlazak unesite exit");
                 sUpc = Console.ReadLine();
                 if (sUpc.ToLower() == "exit") break;
-                int upc = -1;
+                upc = -1;
                 if (validator1.ValidUPC(sUpc) != -1)
                 {
                     upc = validator1.ValidUPC(sUpc);
@@ -73,9 +117,9 @@ namespace GameShop
 
 
                 Console.WriteLine("Unesite cenu: Za izlazak unesite exit");
-                string sPrice = Console.ReadLine();
+                sPrice = Console.ReadLine();
                 if (sPrice.ToLower() == "exit") break;
-                double price = -1;
+                price = -1;
                 if (validator1.ValidatePrice(sPrice) != -1)
                 {
                     price = validator1.ValidatePrice(sPrice);
