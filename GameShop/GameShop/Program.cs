@@ -10,61 +10,87 @@ namespace GameShop
         {
            while (true)
             {
-                ValidateInput validator1 = new ValidateInput();
-                DiscountBase discountBase = new DiscountBase();
+                ValidateInput validator = new ValidateInput();
+                Product product = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
                 string sName, name, sTax, sUpc, sDiscount, sPrice;
                 double discount, price, tax;
                 int upc;
 
-
+                /////UNOS PARA UPC-POPUST
                 Console.WriteLine("Unesite upc i popust za proizvod s tim upc");
-                for(int i = 0; i < 3; i++)
+                bool ispisBaze = true;
+                for (int i = 0; i < 3; i++)
                 {
-                    Console.WriteLine($"UPC {i+1}:");
+                    Console.WriteLine($"UPC {i + 1}:");
                     sUpc = Console.ReadLine();
                     upc = -1;
-                    if (validator1.ValidUPC(sUpc) != -1)
+                    if (validator.ValidUPC(sUpc) != -1)
                     {
-                        upc = validator1.ValidUPC(sUpc);
+                        upc = validator.ValidUPC(sUpc);
                     }
                     else
                     {
                         Console.WriteLine("Pogresan unos. UPC mora biti pozitivan celobrojan broj do 64 karaktera");
+
+                        break;
                     }
 
                     Console.WriteLine($"Popust {i + 1}:");
                     sDiscount = Console.ReadLine();
                     discount = -1;
-                    if (validator1.ValidTax(sDiscount) != -1)
+                    if (validator.ValidTax(sDiscount) != -1)
                     {
-                        discount = validator1.ValidTax(sDiscount);
+                        discount = validator.ValidTax(sDiscount);
                     }
                     else
                     {
                         Console.WriteLine("Pogresan unos. Popust mora biti pozitivan broj do 64 karaktera");
+
+                        break;
                     }
 
-                    if(upc != -1 && discount != -1)
+                    if (upc != -1 && discount != -1)
                     {
-                        discountBase.upcPopustPar.Add(upc, discount);
+                        try
+                        {
+                            product.upcPopustPar.Add(upc, discount);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("****Neuspesan unos baze. Postoje dva artikla sa istim UPC!");
+                            ispisBaze = false;
+                            break;
+                        }
                     }
                 }
 
-                foreach(KeyValuePair<int, double> kvp in discountBase.upcPopustPar)
+
+
+
+
+                if (ispisBaze)
                 {
-                    Console.WriteLine($"Kljuc: {kvp.Key}, vrednost: {kvp.Value}");
+                    foreach (KeyValuePair<int, double> kvp in product.upcPopustPar)
+                    {
+                        Console.WriteLine($"Kljuc: {kvp.Key}, vrednost: {kvp.Value}");
+                    } 
+                }
+                else
+                {
+                    Console.WriteLine("Nema dostupne baze za selektivni popust.");
                 }
 
                 
-                Product product1 = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
                 
+                
+                //////UNOS OSTALIH PARAMETARA
                 Console.WriteLine("Unesite naziv proizvoda. Za izlazak unesite exit");
                 sName = Console.ReadLine();
                 if (sName.ToLower() == "exit") break;
                 name = "-1";
-                if (validator1.ValidName(sName) != "-1")
+                if (validator.ValidName(sName) != "-1")
                 {
-                    name = validator1.ValidName(sName);
+                    name = validator.ValidName(sName);
                 }
                 else
                 {
@@ -77,9 +103,9 @@ namespace GameShop
                 sTax = Console.ReadLine();
                 if (sTax.ToLower() == "exit") break;
                 tax = -1;
-                if (validator1.ValidTax(sTax) != -1)
+                if (validator.ValidTax(sTax) != -1)
                 {
-                    tax = validator1.ValidTax(sTax);
+                    tax = validator.ValidTax(sTax);
                 }
                 else
                 {
@@ -91,9 +117,9 @@ namespace GameShop
                 sDiscount = Console.ReadLine();
                 if (sDiscount.ToLower() == "exit") break;
                 discount = -1;
-                if (validator1.ValidTax(sDiscount) != -1)
+                if (validator.ValidTax(sDiscount) != -1)
                 {
-                    discount = validator1.ValidTax(sDiscount);
+                    discount = validator.ValidTax(sDiscount);
                 }
                 else
                 {
@@ -105,9 +131,9 @@ namespace GameShop
                 sUpc = Console.ReadLine();
                 if (sUpc.ToLower() == "exit") break;
                 upc = -1;
-                if (validator1.ValidUPC(sUpc) != -1)
+                if (validator.ValidUPC(sUpc) != -1)
                 {
-                    upc = validator1.ValidUPC(sUpc);
+                    upc = validator.ValidUPC(sUpc);
                 }
                 else
                 {
@@ -120,9 +146,9 @@ namespace GameShop
                 sPrice = Console.ReadLine();
                 if (sPrice.ToLower() == "exit") break;
                 price = -1;
-                if (validator1.ValidatePrice(sPrice) != -1)
+                if (validator.ValidatePrice(sPrice) != -1)
                 {
-                    price = validator1.ValidatePrice(sPrice);
+                    price = validator.ValidatePrice(sPrice);
                 }
                 else
                 {
@@ -132,10 +158,8 @@ namespace GameShop
 
                 if (name != "-1" && tax != -1 && upc != -1 && price != -1 && discount != -1)
                 {
-                    Product product = new Product(name, upc, price);
-                    //product.withTax(tax);
-                    //product.withDiscount(discount);
-                    Console.WriteLine(product.Ispis(tax, discount));
+                    product = new Product(name, upc, price);
+                    Console.WriteLine(product.Ispis(tax, discount, product.upcPopustPar));
                 }
                 else
                 {
