@@ -46,11 +46,15 @@ namespace GameShop
 
         public string Ispis(double tax, double discount, Dictionary<int, double> dict)
         {
-            return $"\n\nIme = {Name}, UPC = {UPC}, cena = {price} rsd.\n" +
-                //$"Cena {price} pre poreza i {this.fixedTax()} nakon 20% poreza. \n " +
-                $"Porez = {tax}%, Popust = {discount}%\n" +
-                $"Iznos poreza = {this.TaxOrDiscountOnly(tax)} rsd, Iznos ukupnog popusta = {this.totalDiscount(dict, discount)} rsd\n" +
-                $"Osnovna cena = {price} rsd, Cena nakon popusta i poreza = {this.afterTaxAndDiscount(tax, discount, dict)} rsd\n\n";
+            //return $"\n\nIme = {Name}, UPC = {UPC}, cena = {price} rsd.\n" +
+            //    //$"Cena {price} pre poreza i {this.fixedTax()} nakon 20% poreza. \n " +
+            //    $"Porez = {tax}%, Popust = {discount}%\n" +
+            //    $"Iznos poreza = {this.TaxOrDiscountOnly(tax)} rsd, Iznos ukupnog popusta = {this.totalDiscount(dict, discount)} rsd\n" +
+            //    $"Osnovna cena = {price} rsd, Cena nakon popusta i poreza = {this.afterTaxAndDiscount(tax, discount, dict)} rsd\n\n";
+            return $"\n\nIme = {Name}, UPC = {UPC}, Cena pre poreza i popusta = {price} rsd.\n" +
+                $"Odbijeno je = {this.totalDiscount(dict, discount)}\n" +
+                $"Krajnja cena: {this.afterTaxAndDiscount(tax, discount, dict)}\n\n";
+
         }
 
         public double selectiveDiscount(Dictionary<int, double> dict)

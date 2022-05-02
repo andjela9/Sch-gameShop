@@ -70,10 +70,12 @@ namespace GameShop
 
                 if (ispisBaze)
                 {
+                    Console.WriteLine("\nBaza: ");
                     foreach (KeyValuePair<int, double> kvp in product.upcPopustPar)
                     {
-                        Console.WriteLine($"Kljuc: {kvp.Key}, vrednost: {kvp.Value}");
-                    } 
+                        Console.WriteLine($"UPC: {kvp.Key}, selektivni popust: {kvp.Value}");
+                    }
+                    Console.WriteLine("\n");
                 }
                 else
                 {
