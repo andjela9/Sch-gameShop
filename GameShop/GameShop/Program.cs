@@ -11,7 +11,8 @@ namespace GameShop
            while (true)
             {
                 ValidateInput validator = new ValidateInput();
-                Product product = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25);
+                Dictionary<int, double> dict = new Dictionary<int, double>();
+                Product product = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25, dict);
                 string sName, name, sTax, sUpc, sDiscount, sPrice;
                 double discount, price, tax;
                 int upc;
@@ -53,6 +54,7 @@ namespace GameShop
                     {
                         try
                         {
+                            Console.WriteLine("aaaa");
                             product.upcPopustPar.Add(upc, discount);
                         }
                         catch (Exception)
@@ -160,7 +162,7 @@ namespace GameShop
 
                 if (name != "-1" && tax != -1 && upc != -1 && price != -1 && discount != -1)
                 {
-                    product = new Product(name, upc, price);
+                    product = new Product(name, upc, price, product.upcPopustPar);
                     Console.WriteLine(product.Ispis(tax, discount, product.upcPopustPar));
                 }
                 else

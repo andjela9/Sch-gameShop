@@ -13,11 +13,12 @@ namespace GameShop
         public Dictionary<int, double> upcPopustPar = new Dictionary<int, double>();
 
 
-        public Product(string name, int upc, double price)
+        public Product(string name, int upc, double price, Dictionary<int, double> dict)
         {
             this.Name = name;
             this.UPC = upc;
             this.price = price;
+            this.upcPopustPar = dict;               //potencijalan bag, shallow copy
         }
 
         public double fixedTax() {
