@@ -55,7 +55,6 @@ namespace GameShop
                     {
                         try
                         {
-                            Console.WriteLine("aaaa");
                             product.upcPopustPar.Add(upc, discount);
                         }
                         catch (Exception)
@@ -146,7 +145,7 @@ namespace GameShop
                 }
                 //Console.WriteLine($"{upc}\n");
 
-                Console.WriteLine("Da li zelite obracun popusta pre poreza? da/ne");
+                Console.WriteLine("Da li zelite obracun selektivnog popusta pre poreza? da/ne");
                 sBefore = Console.ReadLine().ToUpper();
                 switch (sBefore)
                 {
