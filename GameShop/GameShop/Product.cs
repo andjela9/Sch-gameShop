@@ -9,41 +9,61 @@ namespace GameShop
         private string Name { get; set; }
         private int UPC { get; set; }
         private double price { get; set; }
+        private bool discountBefore { get; set; }
 
         public Dictionary<int, double> upcPopustPar = new Dictionary<int, double>();
 
 
-        public Product(string name, int upc, double price, Dictionary<int, double> dict)
+        public Product(string name, int upc, double price, Dictionary<int, double> dict, bool discBefore)
         {
             this.Name = name;
             this.UPC = upc;
             this.price = price;
             this.upcPopustPar = dict;               //potencijalan bag, shallow copy
+            this.discountBefore = discBefore;
         }
 
-        public double fixedTax() {
-            return Math.Round(1.2 * this.price, 2);
-        }
 
-        public double TaxOrDiscountOnly(double tax)
+        public double TaxOrDiscountOnly(double tax, double price)
         {
-            return Math.Round((tax / 100) * this.price, 2);
+            return Math.Round((tax / 100) * price, 2);
         }
 
-        public double withTax(double tax)
+        
+
+        public double afterTaxAndDiscount(double tax, double discount)
         {
-            return Math.Round(((100 + tax) / 100) * this.price, 2);
+            return Math.Round(this.price + this.TaxOrDiscountOnly(tax, this.price) - this.TaxOrDiscountOnly(discount, this.price) - this.selectiveDiscount(),  2);
         }
 
-        public double withDiscount(double discount)
+        public double selectiveDiscount()
         {
-            return Math.Round(((100 - discount)/100) * this.price, 2);
+            foreach (KeyValuePair<int, double> kvp in this.upcPopustPar)
+            {
+                if (kvp.Key == this.UPC)      //ima dodatni popust
+                {
+                    return Math.Round((kvp.Value / 100) * this.price, 2);
+                }
+            }
+            return 0;
         }
 
-        public double afterTaxAndDiscount(double tax, double discount, Dictionary<int, double> dict)
+        public double totalDiscount(Dictionary<int, double> dict, double disc)
         {
-            return Math.Round(this.price + this.TaxOrDiscountOnly(tax) - this.TaxOrDiscountOnly(discount) - this.selectiveDiscount(dict), 2);
+            if (discountBefore)
+            {
+                double prviPopust = selectiveDiscount();             //prvi popust
+                double drugiPopust = TaxOrDiscountOnly(disc, price - prviPopust);        //drugi popust na novu, umanjenu cenu
+                                                                                      //nova osnovica
+                return prviPopust + drugiPopust;
+            }
+            else
+            {
+                return this.selectiveDiscount() + this.TaxOrDiscountOnly(disc, this.price);
+            }
         }
+
+        //dati i porezu tu novu cenu
 
         public string Ispis(double tax, double discount, Dictionary<int, double> dict)
         {
@@ -54,37 +74,13 @@ namespace GameShop
             //    $"Osnovna cena = {price} rsd, Cena nakon popusta i poreza = {this.afterTaxAndDiscount(tax, discount, dict)} rsd\n\n";
             return $"\n\nIme = {Name}, UPC = {UPC}, Cena pre poreza i popusta = {price} rsd.\n" +
                 $"Odbijeno je = {this.totalDiscount(dict, discount)}\n" +
-                $"Krajnja cena: {this.afterTaxAndDiscount(tax, discount, dict)}\n\n";
+                $"Krajnja cena: {this.afterTaxAndDiscount(tax, discount)}\n\n";
 
         }
 
-        public double selectiveDiscount(Dictionary<int, double> dict)
-        {
-            foreach(KeyValuePair<int, double> kvp in dict)
-            {
-                if(kvp.Key == this.UPC)      //ima dodatni popust
-                {
-                    return Math.Round((kvp.Value / 100) * this.price, 2);
-                }
-            }
-            return 0;
-        }
+        
 
-        public double totalDiscount(Dictionary<int, double> dict, double disc)
-        {
-            return this.selectiveDiscount(dict) + this.TaxOrDiscountOnly(disc);
-        }
-
-        //      dodati unos naziva, upc, cene, zastite za to (validacija)
-        //      upc mora biti celobrojan, bez specijalnih karaktera itd
-        //      naziv ne sme prazan ili samo razmak
-        //      decimala treba da prihvata i . i , i za cenu i za procenat
-        //      ogranicen br karaktera po polju, npr 64
-        //      ne mora da ispise posle 20% nego zadatog
-        //      exit na dugme
-        //      da moze da racuna sa 20% (unet na kraju %)
-        //      negativan broj
-        //      DONE
+  
 
 
     }

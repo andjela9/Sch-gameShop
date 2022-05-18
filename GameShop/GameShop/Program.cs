@@ -12,9 +12,10 @@ namespace GameShop
             {
                 ValidateInput validator = new ValidateInput();
                 Dictionary<int, double> dict = new Dictionary<int, double>();
-                Product product = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25, dict);
-                string sName, name, sTax, sUpc, sDiscount, sPrice;
+                Product product = new Product("LEGO blokovi = Friends Forest House", 41679, 20.25, dict, false);
+                string sName, name, sTax, sUpc, sDiscount, sPrice, sBefore;
                 double discount, price, tax;
+                bool discountBefore = false;
                 int upc;
 
                 /////UNOS PARA UPC-POPUST
@@ -145,6 +146,23 @@ namespace GameShop
                 }
                 //Console.WriteLine($"{upc}\n");
 
+                Console.WriteLine("Da li zelite obracun popusta pre poreza? da/ne");
+                sBefore = Console.ReadLine().ToUpper();
+                switch (sBefore)
+                {
+                    case "DA":
+                        discountBefore = true;
+                        break;
+                    case "NE":
+                        discountBefore = false;
+                        break;
+                    default:
+                        Console.WriteLine("Pogresan unos. Uneti samo da ili ne");
+                        tax = -1;                   //moze napraviti posebnu prom za bool za ovo
+                        break;
+                }
+
+
 
                 Console.WriteLine("Unesite cenu: Za izlazak unesite exit");
                 sPrice = Console.ReadLine();
@@ -162,7 +180,7 @@ namespace GameShop
 
                 if (name != "-1" && tax != -1 && upc != -1 && price != -1 && discount != -1)
                 {
-                    product = new Product(name, upc, price, product.upcPopustPar);
+                    product = new Product(name, upc, price, product.upcPopustPar, discountBefore);
                     Console.WriteLine(product.Ispis(tax, discount, product.upcPopustPar));
                 }
                 else
