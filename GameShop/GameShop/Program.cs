@@ -19,7 +19,7 @@ namespace GameShop
                 int upc;
 
                 /////UNOS PARA UPC-POPUST
-                Console.WriteLine("Unesite upc i popust za proizvod s tim upc");
+                Console.WriteLine("\n\n----------------------------Unesite upc i popust za proizvod s tim upc----------------------------");
                 bool ispisBaze = true;
                 for (int i = 0; i < 3; i++)
                 {
@@ -33,7 +33,7 @@ namespace GameShop
                     else
                     {
                         Console.WriteLine("Pogresan unos. UPC mora biti pozitivan celobrojan broj do 64 karaktera");
-
+                        ispisBaze = false;
                         break;
                     }
 
@@ -47,7 +47,7 @@ namespace GameShop
                     else
                     {
                         Console.WriteLine("Pogresan unos. Popust mora biti pozitivan broj do 64 karaktera");
-
+                        ispisBaze = false;
                         break;
                     }
 
@@ -65,9 +65,6 @@ namespace GameShop
                         }
                     }
                 }
-
-
-
 
 
                 if (ispisBaze)
@@ -98,7 +95,7 @@ namespace GameShop
                 }
                 else
                 {
-                    Console.WriteLine("Pogresen unos. Naziv ne sme biti prazan ili duzi od 64 karaktera.");
+                    Console.WriteLine("Pogresan unos. Naziv ne sme biti prazan ili duzi od 64 karaktera.");
                 }
                 //Console.WriteLine($"{name}\n");
 
@@ -180,12 +177,23 @@ namespace GameShop
                 if (name != "-1" && tax != -1 && upc != -1 && price != -1 && discount != -1)
                 {
                     product = new Product(name, upc, price, product.upcPopustPar, discountBefore);
-                    Console.WriteLine(product.Ispis(tax, discount, product.upcPopustPar));
                 }
                 else
                 {
                     Console.WriteLine("\n******U unosu postoji greska!*******\n");
                 }
+
+                Console.WriteLine("-----UNOS DODATNIH TROSKOVA-----\n ***Za kraj unesite STOP");
+                product.InputAdditionalCosts();         //znaci dva polja koja su recnici su ovde popunjeni
+                //product.AdditionalCosts(price);
+                Console.WriteLine($"Additional costs print" + product.AdditionalCostsPrint(price));
+                //product.AdditionalCostsPrint(price);
+                Console.WriteLine($"Ukupni dodatni troskovi {product.AdditionalCosts(price)}");
+                Console.WriteLine($"{product.Ispis(tax, discount, product.upcPopustPar)}");
+                
+
+
+                
             }
          
 
